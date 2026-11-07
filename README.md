@@ -89,6 +89,32 @@
 - 切到 `p=18` → 视频标识不变 → 更新同一条收藏
 - 换到别的视频 → 视频标识变化 → 互不影响
 
+### DeepLearning.AI
+
+示例 URL：
+
+```
+https://learn.deeplearning.ai/specializations/machine-learning/lesson/iz9z0/running-gradient-descent
+```
+
+| 字段 | 值 |
+|---|---|
+| 域名 | `learn.deeplearning.ai` |
+| URL 正则 | `https://learn\.deeplearning\.ai/specializations/([^/]+)/lesson/.*` |
+
+正则说明：
+
+| 片段 | 含义 |
+|---|---|
+| `https://learn\.deeplearning\.ai/specializations/` | 固定前缀（`.` 需转义为 `\.`） |
+| `([^/]+)` | **第一个捕获组**：课程名 `machine-learning`，用于区分不同课程 |
+| `/lesson/.*` | 匹配任意 lesson 路径，`.*` 吸收 `iz9z0/running-gradient-descent` 等每节课都变化的部分 |
+
+效果：
+- 学这门课的任意一节 → 捕获组都是 `machine-learning` → 更新同一条收藏
+- 换到别的 specialization（如 `/specializations/deep-learning/...`）→ 捕获组变化 → 互不影响
+- 同一课程切换 lesson（ID 变化）→ 捕获组不变 → 原地替换为新课
+
 ### 通用网课（集数在路径里）
 
 | 字段 | 值 |
