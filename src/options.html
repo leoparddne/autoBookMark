@@ -19,6 +19,16 @@
     .toolbar { margin-top: 16px; display: flex; gap: 10px; }
     .status { margin-left: auto; color: #2e7d32; font-size: 13px; align-self: center; }
     .empty { color: #999; padding: 16px 0; }
+    .examples { margin-top: 16px; }
+    .examples-title { font-size: 13px; color: #555; font-weight: 600; margin: 0 0 8px; }
+    .example { border: 1px solid #e5e7eb; border-left: 3px solid #2f6fed; border-radius: 6px; padding: 10px 14px; margin-bottom: 10px; background: #fcfdff; }
+    .example-name { font-size: 13px; font-weight: 600; color: #2f6fed; margin-bottom: 6px; }
+    .example-url { font-size: 12px; color: #888; word-break: break-all; margin-bottom: 8px; }
+    .example-table { width: 100%; border-collapse: collapse; margin: 0; }
+    .example-table td { padding: 4px 8px 4px 0; border: none; font-size: 13px; vertical-align: top; }
+    .example-table .k { width: 70px; color: #555; white-space: nowrap; }
+    .example-table .v { word-break: break-all; }
+    .example-note { font-size: 12px; color: #666; line-height: 1.7; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -28,10 +38,40 @@
     <p><b>规则字段：</b></p>
     <p>· <b>域名</b>：如 <code>www.bilibili.com</code>，只匹配该域名下的网页。</p>
     <p>· <b>URL 正则</b>：直接填完整 URL 的正则，用「第一个捕获组」把同一课程/视频的不同集归为同一收藏项。<br>
-      例如 B 站：<code>https://www\.bilibili\.com/video/(BV\w+)/?[^#]*</code><br>
-      捕获组 1 取视频号 <code>BV...</code>，用于区分不同视频；后面的参数（如 <code>p=17</code>）用 <code>[^#]*</code> 通配吸收。<br>
-      同一视频的不同集 → 只更新这一条收藏；不同视频 → 互不影响。</p>
+      捕获组 1 取课程/视频的稳定标识（如视频号、课程名），用于区分不同课程；<br>
+      后面随集数变化的部分用 <code>.*</code> 或 <code>[^#]*</code> 通配吸收。<br>
+      同一课程的不同集 → 只更新这一条收藏；不同课程 → 互不影响。</p>
     <p>· <b>启用</b>：关闭后该规则不生效。</p>
+  </div>
+
+  <div class="examples">
+    <p class="examples-title">配置示例（可直接复制）</p>
+
+    <div class="example">
+      <div class="example-name">B 站</div>
+      <div class="example-url">示例 URL：https://www.bilibili.com/video/BV16jyuBBEom/?...&amp;p=17</div>
+      <table class="example-table">
+        <tr><td class="k">域名</td><td class="v"><code>www.bilibili.com</code></td></tr>
+        <tr><td class="k">URL 正则</td><td class="v"><code>https://www\.bilibili\.com/video/(BV\w+)/?[^#]*</code></td></tr>
+      </table>
+      <div class="example-note">
+        捕获组 1 = 视频号 <code>BV...</code>，用于区分不同视频；<code>/?[^#]*</code> 通配吸收 <code>?p=17</code>、<code>spm_id_from</code> 等参数。<br>
+        同一视频切集 → 更新同一条收藏；换别的视频 → 互不影响。
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-name">DeepLearning.AI</div>
+      <div class="example-url">示例 URL：https://learn.deeplearning.ai/specializations/machine-learning/lesson/iz9z0/running-gradient-descent</div>
+      <table class="example-table">
+        <tr><td class="k">域名</td><td class="v"><code>learn.deeplearning.ai</code></td></tr>
+        <tr><td class="k">URL 正则</td><td class="v"><code>https://learn\.deeplearning\.ai/specializations/([^/]+)/lesson/.*</code></td></tr>
+      </table>
+      <div class="example-note">
+        捕获组 1 = 课程名 <code>machine-learning</code>，用于区分不同课程；<code>/lesson/.*</code> 吸收每节课都变化的 lesson ID 与 slug。<br>
+        同一课程切换 lesson → 原地更新为新课；换别的 specialization → 互不影响。
+      </div>
+    </div>
   </div>
 
   <table>
