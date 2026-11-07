@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "课程收藏夹进度追踪",
+  "version": "1.0.0",
+  "description": "为在线课程自动更新收藏夹进度：始终记录最新学习到的那一集。",
+  "permissions": [
+    "bookmarks",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "课程收藏夹进度追踪",
+    "default_popup": "src/popup.html"
+  },
+  "options_page": "src/options.html"
+}
