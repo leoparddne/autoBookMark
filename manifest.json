@@ -1,8 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "课程收藏夹进度追踪",
+  "name": "autoBookMark",
   "version": "1.0.0",
   "description": "为在线课程自动更新收藏夹进度：始终记录最新学习到的那一集。",
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
   "permissions": [
     "bookmarks",
     "storage",
@@ -22,8 +28,14 @@
     }
   ],
   "action": {
-    "default_title": "课程收藏夹进度追踪",
-    "default_popup": "src/popup.html"
+    "default_title": "autoBookMark",
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "logo.png",
+      "32": "logo.png",
+      "48": "logo.png",
+      "128": "logo.png"
+    }
   },
   "options_page": "src/options.html"
 }
